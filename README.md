@@ -1,4 +1,4 @@
-# Obsidian Advanced Toolbar Plugin [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-plugin-changelogs)](https://github.com/phibr0/obsidian-plugin-changelogs/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-plugin-changelogs/total)
+# Obsidian Plugin Changelogs [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-plugin-changelogs)](https://github.com/phibr0/obsidian-plugin-changelogs/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-plugin-changelogs/total)
 
 This Plugins lets you view the Changelogs of Community Plugins inside Obsidian. *Please note that this only works if the Plugin Developer provides Changelogs in GitHub's Release Notes.*
 
