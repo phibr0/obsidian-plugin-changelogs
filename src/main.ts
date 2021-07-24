@@ -52,7 +52,7 @@ export default class ChangelogPlugin extends Plugin {
 	}
 
 	async getAllTags(repo: string) {
-		if (!repo) {
+		if (repo) {
 			const resp = JSON.parse(await request({ url: `https://api.github.com/repos/${repo}/git/refs/tags` }))
 			const tags: string[] = [];
 			resp.forEach(element => {
