@@ -1,7 +1,7 @@
 {
 	"id": "plugin-changelogs",
 	"name": "Plugin Changelogs",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"minAppVersion": "0.12.11",
 	"description": "Read Plugin Changelogs inside Obsidian",
 	"author": "phibr0",

@@ -6,7 +6,7 @@
   export let manifest: PluginManifest;
 
   let selectedTag = manifest.version;
-  let tags = plugin.getAllTags(plugin.getPluginInfo(manifest.id).repo);
+  let tags = plugin.getAllTags(plugin.getPluginInfo(manifest.id)?.repo);
   let changelog = plugin.getChangelog(manifest, manifest.version);
 
   function getChangelog() {

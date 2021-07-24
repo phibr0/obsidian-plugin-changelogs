@@ -51,16 +51,18 @@ export default class ChangelogPlugin extends Plugin {
 		}
 	}
 
-	async getAllTags(repo: string){
-		const resp = JSON.parse(await request({url: `https://api.github.com/repos/${repo}/git/refs/tags`}))
-		const tags: string[] = [];
-		resp.forEach(element => {
-			tags.push((element.ref as string).split("/").last());
-		});
-		return tags;
+	async getAllTags(repo: string) {
+		if (!repo) {
+			const resp = JSON.parse(await request({ url: `https://api.github.com/repos/${repo}/git/refs/tags` }))
+			const tags: string[] = [];
+			resp.forEach(element => {
+				tags.push((element.ref as string).split("/").last());
+			});
+			return tags;
+		}
 	}
 
-	getPluginInfo(id: string){
+	getPluginInfo(id: string) {
 		return this.plugins.find(plugin => plugin.id == id);
 	}
 
