@@ -8,10 +8,11 @@ interface CommunityPlugin {
 	author: string;
 	description: string;
 	repo: string;
+	tags: string[];
 }
 
 export default class ChangelogPlugin extends Plugin {
-	plugins: CommunityPlugin[];
+	plugins: CommunityPlugin[] = [];
 
 	async onload() {
 		console.log('loading plugin');
@@ -19,26 +20,30 @@ export default class ChangelogPlugin extends Plugin {
 		addIcons();
 
 		//@ts-ignore
-		this.registerEvent(this.app.workspace.on("plugin-settings:plugin-control", (setting, manifest, enabled) => {
+		this.registerEvent(this.app.workspace.on("plugin-settings:plugin-control", (setting: Setting, manifest: PluginManifest, enabled: boolean) => {
 			//@ts-ignore
 			this.createExtraButtons(setting, manifest, enabled);
 		}));
 
-		this.plugins = JSON.parse(await request({ url: "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json" })) as CommunityPlugin[];
 	}
 
-	createExtraButtons(setting: Setting, manifest: PluginManifest, enabled: boolean) {
-		if (this.plugins) {
-			setting.addExtraButton((btn: ExtraButtonComponent) => {
-				btn.setIcon("changelog")
-					.setTooltip("Read Changelog")
-					.onClick(async () => new ChangelogModal(this, manifest).open());
-			});
+	async getCommunityPlugins() {
+		if (this.plugins.length === 0) {
+			this.plugins = JSON.parse(await request({ url: "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json" })) as CommunityPlugin[];
 		}
+		return this.plugins;
+	}
+
+	async createExtraButtons(setting: Setting, manifest: PluginManifest, enabled: boolean) {
+		setting.addExtraButton((btn: ExtraButtonComponent) => {
+			btn.setIcon("changelog")
+				.setTooltip("Read Changelog")
+				.onClick(async () => new ChangelogModal(this, manifest).open());
+		});
 	}
 
 	async getChangelog(manifest: PluginManifest, version: string) {
-		const plugin = this.getPluginInfo(manifest.id);
+		const plugin = await this.getPluginInfo(manifest.id);
 		if (plugin) {
 			const parser = new DOMParser();
 			const releasePage = await request({
@@ -51,19 +56,21 @@ export default class ChangelogPlugin extends Plugin {
 		}
 	}
 
-	async getAllTags(repo: string) {
-		if (repo) {
-			const resp = JSON.parse(await request({ url: `https://api.github.com/repos/${repo}/git/refs/tags` }))
+	async getAllTags(plugin: CommunityPlugin) {
+		if (!plugin.tags) {
+			console.log("api call")
+			const resp = JSON.parse(await request({ url: `https://api.github.com/repos/${plugin.repo}/git/refs/tags` }))
 			const tags: string[] = [];
-			resp.forEach(element => {
+			resp.forEach((element) => {
 				tags.push((element.ref as string).split("/").last());
 			});
-			return tags;
+			plugin.tags = tags;
 		}
+		return plugin.tags;
 	}
 
-	getPluginInfo(id: string) {
-		return this.plugins.find(plugin => plugin.id == id);
+	async getPluginInfo(id: string) {
+		return (await this.getCommunityPlugins()).find(plugin => plugin.id == id);
 	}
 
 	onunload() {

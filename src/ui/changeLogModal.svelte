@@ -5,8 +5,12 @@
   export let plugin: ChangelogPlugin;
   export let manifest: PluginManifest;
 
+  async function tagHelper(id: string): Promise<string[]>{
+    return await plugin.getAllTags((await plugin.getPluginInfo(manifest.id)));
+  }
+
   let selectedTag = manifest.version;
-  let tags = plugin.getAllTags(plugin.getPluginInfo(manifest.id)?.repo);
+  let tags = tagHelper(manifest.id);
   let changelog = plugin.getChangelog(manifest, manifest.version);
 
   function getChangelog() {
