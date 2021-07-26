@@ -18,10 +18,13 @@ export default class ChangelogPlugin extends Plugin {
 		console.log('loading plugin');
 
 		addIcons();
-		//@ts-ignore
-		if (!this.app.plugins.getPlugin("hotkey-helper")) {
-			new Notice("Please install the Plugin: \"Hotkey Helper\" by PJ Eby to use the Changelog Plugin.", 10000)
-		} 
+
+		this.app.workspace.onLayoutReady(() => {
+			//@ts-ignore
+			if (!this.app.plugins.getPlugin("hotkey-helper")) {
+				new Notice("Please install the Plugin: \"Hotkey Helper\" by PJ Eby to use the Changelog Plugin.", 10000)
+			}
+		});
 
 		//@ts-ignore
 		this.registerEvent(this.app.workspace.on("plugin-settings:plugin-control", (setting: Setting, manifest: PluginManifest, enabled: boolean) => {
