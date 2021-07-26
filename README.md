@@ -2,6 +2,8 @@
 
 <img width="600px" align="right" src="https://user-images.githubusercontent.com/59741989/126879420-09c5e86e-6cbf-48ca-9ea8-f91f416e39b6.gif">
 
+> Please note: This Plugin requires Obsidian 1.12.11 (which is currently still only available to Insiders) **and you will need to install pjeby's [Hotkey Helper](https://github.com/pjeby/hotkey-helper) Plugin**
+
 This Plugins lets you view the Changelogs of Community Plugins inside Obsidian. *Please note that this only works if the Plugin Developer provides Changelogs in GitHub's Release Notes.*
 
 ## How to install
