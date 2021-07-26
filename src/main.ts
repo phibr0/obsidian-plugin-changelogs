@@ -1,4 +1,4 @@
-import { ExtraButtonComponent, Plugin, PluginManifest, Setting, request, Modal, App } from 'obsidian';
+import { ExtraButtonComponent, Plugin, PluginManifest, Setting, request, Modal, App, Notice } from 'obsidian';
 import ChangelogModal from 'src/ui/changeLogModal';
 import { addIcons } from './ui/icons';
 
@@ -18,13 +18,16 @@ export default class ChangelogPlugin extends Plugin {
 		console.log('loading plugin');
 
 		addIcons();
+		//@ts-ignore
+		if (!this.app.plugins.getPlugin("hotkey-helper")) {
+			new Notice("Please install the Plugin: \"Hotkey Helper\" by PJ Eby to use the Changelog Plugin.", 10000)
+		} 
 
 		//@ts-ignore
 		this.registerEvent(this.app.workspace.on("plugin-settings:plugin-control", (setting: Setting, manifest: PluginManifest, enabled: boolean) => {
 			//@ts-ignore
 			this.createExtraButtons(setting, manifest, enabled);
 		}));
-
 	}
 
 	async getCommunityPlugins() {
