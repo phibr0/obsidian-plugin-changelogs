@@ -16,6 +16,19 @@
   function getChangelog() {
     changelog = plugin.getChangelog(manifest, selectedTag);
   }
+
+  async function selectPrevious() {
+    const tags = await tagHelper(selectedTag);
+    selectedTag = tags[tags.indexOf(selectedTag) - 1];
+    getChangelog();
+  }
+
+  async function selectNext() {
+    const tags = await tagHelper(selectedTag);
+    tags.length
+    selectedTag = tags[tags.indexOf(selectedTag) + 1];
+    getChangelog();
+  }
 </script>
 
 <main>
@@ -41,7 +54,7 @@
     <h3>Changelog</h3>
     {#await changelog}
       <div class="center">
-        <div class="spinner" />
+        <div class="spinner"/>
       </div>
     {:then changelog}
       {#if changelog}
@@ -49,6 +62,14 @@
       {:else}
         Can't find the Changelog
       {/if}
+      <div class="buttons">
+        <button disabled={tags.indexOf(selectedTag) === 0} class="btn-previous" on:click={selectPrevious}>
+          Previous Release
+        </button>
+        <button disabled={tags.indexOf(selectedTag) === tags.length - 1} class="btn-next" on:click={selectNext}>
+          Next Release
+        </button>
+      </div>
     {/await}
   {:catch}
     <div class="error">Something went wrong..</div>
@@ -59,6 +80,11 @@
   main {
     min-height: 25vh;
     min-width: 33vw;
+  }
+
+  .buttons{
+    display: flex;
+    place-content: center;
   }
 
   .descContainer {
