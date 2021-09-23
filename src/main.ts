@@ -28,6 +28,9 @@ export default class ChangelogPlugin extends Plugin {
 
 		//@ts-ignore
 		this.registerEvent(this.app.workspace.on("plugin-settings:plugin-control", (setting: Setting, manifest: PluginManifest, enabled: boolean) => {
+			if(!manifest.version) {
+				return;
+			}
 			//@ts-ignore
 			this.createExtraButtons(setting, manifest, enabled);
 		}));
@@ -40,7 +43,7 @@ export default class ChangelogPlugin extends Plugin {
 		return this.plugins;
 	}
 
-	async createExtraButtons(setting: Setting, manifest: PluginManifest, enabled: boolean) {
+	async createExtraButtons(setting: Setting, manifest: PluginManifest, _: boolean) {
 		setting.addExtraButton((btn: ExtraButtonComponent) => {
 			btn.setIcon("changelog")
 				.setTooltip("Read Changelog")
