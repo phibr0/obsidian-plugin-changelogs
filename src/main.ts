@@ -15,7 +15,7 @@ export default class ChangelogPlugin extends Plugin {
 	plugins: CommunityPlugin[] = [];
 
 	async onload() {
-		console.log('loading plugin');
+		console.log('loading plugin: PLUGIN CHANGELOGS');
 
 		addIcons();
 
@@ -59,9 +59,9 @@ export default class ChangelogPlugin extends Plugin {
 				url: `https://github.com/${plugin.repo}/releases/tag/${version}`
 			});
 			const releaseHTML = parser.parseFromString(releasePage, "text/html");
-			const patchNotes = releaseHTML.getElementsByClassName("release-main-section")?.item(0).children.item(1);
+			const patchNotes = releaseHTML.querySelector("[data-test-selector=release-card]").lastElementChild.firstElementChild.lastElementChild;
 			//@ts-ignore
-			return window.DOMPurify.sanitize(patchNotes)
+			return window.DOMPurify.sanitize(patchNotes);
 		}
 	}
 
