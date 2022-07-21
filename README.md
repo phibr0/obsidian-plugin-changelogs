@@ -1,3 +1,5 @@
+# This Plugin is now archived.
+
 # Obsidian Plugin Changelogs [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-plugin-changelogs)](https://github.com/phibr0/obsidian-plugin-changelogs/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-plugin-changelogs/total)
 
 <img width="600px" align="right" src="https://user-images.githubusercontent.com/59741989/126879420-09c5e86e-6cbf-48ca-9ea8-f91f416e39b6.gif">
